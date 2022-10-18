@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT system</title>
+    <!-- MATERIAL CDN -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="../public/css/dashboard.css">
+
+    <!-- highCharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!-- Our project just needs Font Awesome Solid + Brands -->
+    <script defer src="/fontawesome-free-6.2.0-web/js/brands.js"></script>
+    <script defer src="/fontawesome-free-6.2.0-web/js/solid.js"></script>
+    <script defer src="/fontawesome-free-6.2.0-web/js/fontawesome.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="../public//img/logo.jpg" alt="">
+                    <h2>I<span class="primary">oT</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="#" class="active">
+                    <span class="material-symbols-outlined">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        home
+                    </span>
+                    <h3>Rooms</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        devices
+                    </span>
+                    <h3>Devices</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        shield_with_heart
+                    </span> 
+                    <h3>Security</h3>
+                </a>
+                <a href="./statistics.html">
+                    <span class="material-symbols-outlined">
+                        bar_chart
+                    </span>
+                    <h3>Statistics</h3>
+                </a>
+                 <a href="./userInfo.html">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <h3>User</h3>
+                </a>
+                <a href="./page/login-register/index.html">
+                    <span class="material-symbols-outlined">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- ************* END OF ASIDE ************* -->
+        <main>
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" name="" id="">
+            </div>
+
+            <div class="insights">
+                <div class="temp">
+                    <span class="material-symbols-outlined">
+                        device_thermostat
+                    </span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Temp</h3>
+                            <h1 class="defaultValue__temp"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36" id="circle__temp"></circle>
+                            </svg>
+                            <div class="number">
+                                <p class="value__temp">
+                                    <div class="fa-3x">
+                                        <i class="fa-solid fa-cog fa-spin" style="width: 4rem"></i>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 8 seconds</small>
+                </div>
+                <!-- ************* END OF TEMPERATURE ************* -->
+                <div class="humidity">
+                    <span class="material-symbols-outlined">
+                        humidity_mid
+                    </span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Humidity</h3>
+                            <h1 class="defaultValue__humidity"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p class="value__humidity">
+                                    <div class="fa-3x">
+                                        <i class="fa-solid fa-cog fa-spin" style="width: 4rem"></i>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 8 seconds</small>
+                </div>
+                <!-- ************* END OF HUMIDITY ************* -->
+                <div class="light">
+                    <span class="material-symbols-outlined">
+                        wb_incandescent
+                    </span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Light</h3>
+                            <h1 class="defaultValue__light"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p class="value__light">
+                                    <div class="fa-3x">
+                                        <i class="fa-solid fa-cog fa-spin" style="width: 4rem"></i>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 8 seconds</small>
+                </div>
+                <!-- ************* END OF LIGHT ************* -->
+                <div class="gas">
+                    <span class="material-symbols-outlined">
+                        valve
+                    </span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Gas</h3>
+                            <h1 class="defaultValue__gas"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p class="value__gas">
+                                    <div class="fa-3x">
+                                        <i class="fa-solid fa-cog fa-spin" style="width: 4rem"></i>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 8 seconds</small>
+                </div>
+                <!-- ************* END OF LIGHT ************* -->
+            </div>
+            <!-- ************* END OF INSIGHTS ************* -->
+            <h2>Table</h2>
+            <div class="table">
+                
+                <div class="chart">
+                    <h3>Chart</h3>
+                    <div class="fa-3x">
+                        <i class="fa-solid fa-cog fa-spin" style="width: 4rem"></i>
+                    </div>
+                    <figure class="highcharts-figure">
+                      <div id="container2"></div>
+                    </figure>
+                </div>
+                <div class="led">
+                    <div class="led1">
+                        <span class="material-symbols-outlined">
+                            emoji_objects
+                        </span>
+                        <h3>Led 1</h3>
+                        <div class="button">
+                            <input type="checkbox" name="">
+                        </div>
+                    </div>
+                    <div class="led2">
+                        <span class="material-symbols-outlined">
+                            emoji_objects
+                        </span>
+                        <h3>Led 2</h3>
+                        <div class="button">
+                            <input type="checkbox" name="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ************* END OF TABLE ************* -->
+        </main>
+        <!-- ************* END OF MAIN ************* -->
+        
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">
+                        light_mode
+                    </span>
+                    <span class="material-symbols-outlined">
+                        dark_mode
+                    </span>
+                </div>
+                 <div class="profile">
+                    <div class="info">
+                        <p>Welcome, <b>thuvu</b></p>
+                        <small class="text-muted">User</small>
+                    </div>
+                    <div class="profile-photo">
+                        <a href="./page/user/userInfo.html">
+                        <img src="../public/img/image.png" alt="" >
+                        </a>
+                    </div>
+                 </div>
+            </div>
+            <!-- ************* END OF TOP ************* -->
+            <div class="devices">
+                <h3>My Devices</h3>
+                <div class="middle">
+                <div class="air">
+                    <span class="material-symbols-outlined">
+                        mode_fan
+                    </span>
+                    <h3>AC</h3>
+                </div>
+                <div class="router">
+                    <span class="material-symbols-outlined">
+                        router
+                    </span>
+                    <h3>Router</h3>
+                </div>
+                <div class="music">
+                    <span class="material-symbols-outlined">
+                        speaker
+                    </span>
+                    <h3>Music</h3>
+                </div>
+                <div class="lamps">
+                    <span class="material-symbols-outlined">
+                        light_group
+                    </span>
+                    <h3>Lamps</h3>
+                </div>
+                </div>
+            </div>
+            <div class="gradient">
+                <h2>Gradient</h2>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../public/js/dashboard.js"></script>
+</body>
+</html>
