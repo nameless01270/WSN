@@ -1,4 +1,4 @@
-
+// ********************* dark mode ********************* //
 const themeToggler = document.querySelector(".theme-toggler");
 
 themeToggler.addEventListener('click', () => {
@@ -130,6 +130,8 @@ input.addEventListener("keypress", function(event) {
     }
 });
 
+
+// ********************* Delete and update data ********************* //
 function deleteRowById(id) {
     fetch(`http://localhost:3300/delete/${id}`, {
         method: 'DELETE'
@@ -152,6 +154,48 @@ document.querySelector("table tbody").addEventListener("click", function(event) 
     }
 });
 
+let popup = document.getElementById("popup1");
+
+function openPopup() {
+    popup.classList.add("open-popup");
+    document.querySelector(".container").classList.add("blur");
+}
+
+function closePopup() {
+    popup.classList.remove("open-popup");
+    document.querySelector(".container").classList.remove("blur");
+}
+
+function handleEditData(id) {
+    document.querySelector("#name-data").dataset.id = id;
+    document.querySelector("#location-data").dataset.id = id;
+}
+
+function updateData() {
+    const updatePlaceInput = document.querySelector("#name-data");
+    const updateLocationInput = document.querySelector("#location-data");
+
+    console.log(updatePlaceInput, updateLocationInput);
+    fetch('http://localhost:3300/update', {
+        method: 'PUT',
+        headers: {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({
+            id: updatePlaceInput.dataset.id,
+            name: updatePlaceInput.value,
+            location: updateLocationInput.value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    })
+}
+
+// ********************* Button show all ********************* //
 async function loadIntoAllTable(url, table) {
     const tableBody = table.querySelector("tbody");
 
@@ -203,44 +247,3 @@ btnShowAll.addEventListener("click", function(event) {
     event.preventDefault();
     loadIntoAllTable('http://localhost:3300/get-all-data', document.querySelector("table"));
 });
-
-let popup = document.getElementById("popup1");
-
-function openPopup() {
-    popup.classList.add("open-popup");
-    document.querySelector(".container").classList.add("blur");
-}
-
-function closePopup() {
-    popup.classList.remove("open-popup");
-    document.querySelector(".container").classList.remove("blur");
-}
-
-function handleEditData(id) {
-    document.querySelector("#name-data").dataset.id = id;
-    document.querySelector("#location-data").dataset.id = id;
-}
-
-function updateData() {
-    const updatePlaceInput = document.querySelector("#name-data");
-    const updateLocationInput = document.querySelector("#location-data");
-
-    console.log(updatePlaceInput, updateLocationInput);
-    fetch('http://localhost:3300/update', {
-        method: 'PUT',
-        headers: {
-            'Content-type' : 'application/json'
-        },
-        body: JSON.stringify({
-            id: updatePlaceInput.dataset.id,
-            name: updatePlaceInput.value,
-            location: updateLocationInput.value
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    })
-}
