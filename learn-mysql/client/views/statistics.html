@@ -108,7 +108,7 @@
                 <tbody>
                 </tbody>
             </table>
-            <div class="overlay" id="popup1">
+            <!-- <div class="overlay" id="popup1">
             <div class="popup" id="popup">
                 <div class="top-popup">
                     <h2>Edit Form</h2>
@@ -131,7 +131,7 @@
                     <button type="button" class="button-popup" onclick="closePopup()">Cancel</button>
                 </div>
             </div>
-            </div>
+            </div> -->
             <button type="button" class="submit">Show All</button>
         </div>
 
@@ -167,6 +167,30 @@
         <!--********************** End of Right **********************-->
     </div>
 
+    <div class="overlay" id="popup1">
+            <div class="popup" id="popup">
+                <div class="top-popup">
+                    <h2>Edit Form</h2>
+                    <div class="icon-popup">
+                        <i class="search fa fa-close"></i>
+                    </div>
+                </div>
+                <div class="middle-popup">
+                    <div class="edit-place">
+                        <label for="place">Place: </label>
+                        <input type="text" placeholder="Place" id="name-data">
+                    </div>
+                    <div class="edit-location">
+                        <label for="location">Location: </label>
+                        <input type="text" placeholder="Location" id="location-data">
+                    </div>
+                </div>
+                <div class="bottom-popup">
+                    <button type="button" class="button-popup" onclick="updateData()">Update</button>
+                    <button type="button" class="button-popup" onclick="closePopup()">Cancel</button>
+                </div>
+            </div>
+    </div>
 
     <script src="../public/js/statistics.js"></script>
 </body>

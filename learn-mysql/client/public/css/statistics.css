@@ -289,6 +289,7 @@ aside .sidebar a:hover span {
     background: var(--color-white);
     width: 100%;
     border-radius: var(--card-border-radius);
+    border-color: #202528;
     padding: var(--card-padding);
     text-align: center;
     box-shadow: var(--box-shadow);
@@ -427,11 +428,11 @@ aside .sidebar a:hover span {
     position: fixed;
     top: 0;
     left: 50%;
-    transition: opacity 500ms;
     visibility: hidden;
-    opacity: 0;
+    transition: opacity 400ms;
     transform: translate(-50%, -50%) scale(0.1);
     transition: transform 0.4s, top 0.4s; 
+    opacity: 0;
 }
 
 
@@ -442,7 +443,7 @@ aside .sidebar a:hover span {
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     text-align: center;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 4rem 6rem var(--color-light);;
     transition: all 300ms ease;
     position: relative;
 }
@@ -454,9 +455,9 @@ aside .sidebar a:hover span {
     opacity: 1;
 }
 
-.popup:hover {
-    box-shadow: none;
-}
+.blur {
+    filter: blur(0.2rem)
+};
 
 
 .data-table table tbody tr:last-child div {

@@ -208,10 +208,12 @@ let popup = document.getElementById("popup1");
 
 function openPopup() {
     popup.classList.add("open-popup");
+    document.querySelector(".container").classList.add("blur");
 }
 
 function closePopup() {
     popup.classList.remove("open-popup");
+    document.querySelector(".container").classList.remove("blur");
 }
 
 function handleEditData(id) {
