@@ -1,0 +1,17 @@
+CREATE DATABASE test1;
+
+CREATE TABLE `devices` (
+    `id` INT(10) AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `note` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `action` (
+    id INT(10) AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(10),
+    device_id INT(10),
+    action INT(10),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
