@@ -5,7 +5,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 const dotenv = require("dotenv");
-const { createTable, insertNewData, sendDataToClient, getAllData, searchByName, deleteDataSensor, updateNameById } = require("./db");
+const { createTable, insertNewData, sendDataToClient, getAllData, searchByName, deleteDataSensor, updateNameById, getLastData } = require("./db");
 const path = require("path");
 
 // set up environment
@@ -63,6 +63,15 @@ app.put("/update", (req, res) => {
 
   result
     .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+
+// Get last data sensor
+app.get("/get-last-data", (req, res) => {
+  const result = getLastData();
+
+  result
+    .then((data) => res.json({ data: data }))
     .catch((err) => console.log(err));
 });
 

@@ -1,14 +1,48 @@
 // ********************* Connect socket.io ********************* //
 var socket = io();
 
-// ********************* Dark mode or light mode ********************* //
+// ********************* dark mode ********************* //
 const themeToggler = document.querySelector(".theme-toggler");
+
+const container = document.body;
+if (localStorage.getItem("data-theme")) {
+  container.setAttribute("data-theme", localStorage.getItem("data-theme"));
+  console.log(localStorage.getItem("data-theme"));
+  if(localStorage.getItem("data-theme") === "dark") {
+    document.body.classList.toggle("dark-theme-variables");
+    themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
+    themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+  }
+  toggleDark(0);
+}
+
+function toggleDark(r) {
+  const dataTheme = localStorage.getItem("data-theme");
+  let theme_switch;
+  if (dataTheme === "light") {
+    theme_switch = 1;
+  } else {
+    theme_switch = 0;
+  }
+  if (r) {
+    console.log(theme_switch);
+    theme_switch = !theme_switch;
+    console.log(theme_switch);
+  }
+  if (theme_switch) {
+    localStorage.setItem("data-theme", "light");
+    console.log("light");
+  } else {
+    localStorage.setItem("data-theme", "dark");
+    console.log("dark");
+  }
+}
 
 themeToggler.addEventListener("click", () => {
   document.body.classList.toggle("dark-theme-variables");
-
   themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
   themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+  toggleDark(1);
 });
 
 // ********************* Animation Circle Value ********************* //
@@ -87,10 +121,8 @@ var previousValueGas = 0;
 
 var animationDuration = 3000;
 
-// ********************* Real-time chart ********************* //
-socket.on("send-update-data-sensors", function (data) {
-  if (data) {
-    let temp = data.temp;
+function renderDataUpdated(data) {
+  let temp = data.temp;
     let humidity = data.humidity;
     let light = data.light;
     let gas = data.dust;
@@ -267,8 +299,8 @@ socket.on("send-update-data-sensors", function (data) {
     let lightLastTimeDisplay = document.querySelector(".insights .light .text-muted");
     let gasLastTimeDisplay = document.querySelector(".insights .gas .text-muted");
 
-    function refreshTime() {
-      var dateString = new Date().toLocaleString("en-US", {
+    function updateTime(time) {
+      var dateString = new Date(time).toLocaleString("en-US", {
         timeZone: "Asia/Jakarta",
       });
       var formattedString = dateString.replace(", ", " - ");
@@ -278,7 +310,7 @@ socket.on("send-update-data-sensors", function (data) {
       gasLastTimeDisplay.innerHTML = `Update at: ${formattedString}`;
     }
 
-    refreshTime();
+    updateTime(timeTest);
     // ********************* End of text muted ********************* //
 
     // ********************* HighCharts ********************* //
@@ -374,5 +406,30 @@ socket.on("send-update-data-sensors", function (data) {
         ],
       },
     });
+}
+
+// ********************* Early ********************* //
+const renderDataEarly = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  renderDataUpdated(data.data[0]);
+}
+
+renderDataEarly("http://localhost:3000/get-last-data");
+
+// ********************* Real-time ********************* //
+socket.on("send-update-data-sensors", function (data) {
+  if (data) {
+    renderDataUpdated(data);
   }
 });
+// date time
+var timeDisplay = document.getElementById("date-time");
+
+function refreshDateTime() {
+  var dateTimeString = new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" });
+  var formatString = dateTimeString.replace(", ", " - ");
+  timeDisplay.innerHTML = formatString;
+}
+
+setInterval(refreshDateTime, 1000);

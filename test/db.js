@@ -156,4 +156,22 @@ const updateNameById = async (id, name, location) => {
     }
 }
 
-module.exports = { createTable, insertNewData, sendDataToClient, getAllData, searchByName, deleteDataSensor, updateNameById };
+// Get last data
+const getLastData = async () => {
+  try {
+      const response = await new Promise((resolve, reject) => {
+          const query = "SELECT * FROM datasensors ORDER BY ID DESC limit 1;";
+          
+          connection.query(query, (err, result) => {
+              if (err) reject(new Error(err.message));
+              resolve(result);
+          })
+      });
+
+      return response;
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+module.exports = { createTable, insertNewData, sendDataToClient, getAllData, searchByName, deleteDataSensor, updateNameById, getLastData };

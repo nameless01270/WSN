@@ -1,11 +1,45 @@
 // ********************* dark mode ********************* //
 const themeToggler = document.querySelector(".theme-toggler");
 
+const container = document.body;
+if (localStorage.getItem("data-theme")) {
+  container.setAttribute("data-theme", localStorage.getItem("data-theme"));
+  console.log(localStorage.getItem("data-theme"));
+  if(localStorage.getItem("data-theme") === "dark") {
+    document.body.classList.toggle("dark-theme-variables");
+    themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
+    themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+  }
+  toggleDark(0);
+}
+
+function toggleDark(r) {
+  const dataTheme = localStorage.getItem("data-theme");
+  let theme_switch;
+  if (dataTheme === "light") {
+    theme_switch = 1;
+  } else {
+    theme_switch = 0;
+  }
+  if (r) {
+    console.log(theme_switch);
+    theme_switch = !theme_switch;
+    console.log(theme_switch);
+  }
+  if (theme_switch) {
+    localStorage.setItem("data-theme", "light");
+    console.log("light");
+  } else {
+    localStorage.setItem("data-theme", "dark");
+    console.log("dark");
+  }
+}
+
 themeToggler.addEventListener("click", () => {
   document.body.classList.toggle("dark-theme-variables");
-
   themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
   themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+  toggleDark(1);
 });
 // ********************* Format date ********************* //
 function formatDate(date) {
