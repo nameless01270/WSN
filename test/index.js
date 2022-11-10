@@ -5,7 +5,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 const dotenv = require("dotenv");
-const { createTable, insertNewData, sendDataToClient, getAllData, searchByName, deleteDataSensor, updateNameById, getLastData } = require("./db");
+const {
+  createTable,
+  insertNewData,
+  sendDataToClient,
+  getAllData,
+  searchByName,
+  deleteDataSensor,
+  updateNameById,
+  getLastData,
+} = require("./db");
 const path = require("path");
 
 // set up environment
@@ -91,6 +100,11 @@ const options = {
   protocol: process.env.PROTOCOL_MQTT,
   username: process.env.USERNAME_MQTT,
   password: process.env.PASSWORD_MQTT,
+  // clientID: "dai",
+  // username: "dai",
+  // password: "123456",
+  // host: "mqtt.wuys.me",
+  // port: 1883,
 };
 
 // initialize the MQTT client
@@ -131,4 +145,31 @@ client.on("message", function (topic, message) {
 
   // Send data to client
   sendDataToClient(io);
+});
+
+io.on("connection", function (socket) {
+  console.log(socket.id + " connected");
+  socket.on("disconnect", function () {
+    console.log(socket.id + " disconnected");
+  });
+
+  socket.on("Led1", function (data) {
+    if (data == "on") {
+      console.log("Led1 ON");
+      client.publish("turn-led1", "Led1On");
+    } else {
+      console.log("Led1 OFF");
+      client.publish("turn-led1", "Led1Off");
+    }
+  });
+
+  socket.on("Led2", function (data) {
+    if (data == "on") {
+      console.log("Led2 ON");
+      client.publish("turn-led2", "Led2On");
+    } else {
+      console.log("Led2 OFF");
+      client.publish("turn-led2", "Led2Off");
+    }
+  });
 });

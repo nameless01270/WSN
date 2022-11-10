@@ -212,7 +212,7 @@
                         </span>
                         <h3>Led 1</h3>
                         <div class="button">
-                            <input type="checkbox" name="">
+                            <input type="checkbox" name="" id="led-1">
                         </div>
                     </div>
                     <div class="led2">
@@ -221,7 +221,7 @@
                         </span>
                         <h3>Led 2</h3>
                         <div class="button">
-                            <input type="checkbox" name="">
+                            <input type="checkbox" name="" id="led-2">
                         </div>
                     </div>
                 </div>
@@ -291,6 +291,24 @@
             </div>
         </div>
     </div>
+
+    <div class="overlay" id="popup1">
+        <div class="popup" id="popup">
+          <div class="top-popup">
+          </div>
+          <div class="middle-popup">
+            <h2>Do you want to turn on led?</h2>
+          </div>
+          <div class="bottom-popup">
+            <button type="button" class="button-popup" id="btn-yes" onclick="confirmLed()">
+              Yes
+            </button>
+            <button type="button" class="button-popup" id="btn-no" onclick="closePopup()">
+              No
+            </button>
+          </div>
+        </div>
+      </div>
     
     <script src="../public/js/dashboard.js"></script>
 </body>
