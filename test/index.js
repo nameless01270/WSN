@@ -95,18 +95,18 @@ const mqtt = require("mqtt");
 
 // Connect to mqtt
 const options = {
-  host: process.env.HOST_MQTT,
-  port: process.env.PORT_MQTT,
-  protocol: process.env.PROTOCOL_MQTT,
+  // host: process.env.HOST_MQTT,
+  // port: process.env.PORT_MQTT,
+  // protocol: process.env.PROTOCOL_MQTT,
+  // username: process.env.USERNAME_MQTT,
+  // password: process.env.PASSWORD_MQTT,
+  clientID: process.env.CLIENTID,
   username: process.env.USERNAME_MQTT,
   password: process.env.PASSWORD_MQTT,
-  // clientID: "dai",
-  // username: "dai",
-  // password: "123456",
-  // host: "mqtt.wuys.me",
-  // port: 1883,
+  host: process.env.HOST_MQTT,
+  port: process.env.PORT_MQTT,
 };
-
+// mosquitto_sub -h broker.mqttdashboard.com -t place/data/sensors
 // initialize the MQTT client
 const client = mqtt.connect(options);
 
@@ -127,15 +127,15 @@ client.on("message", function (topic, message) {
   console.log("message is " + message);
   console.log("topic is " + topic);
   const data = JSON.parse(message);
-  console.log(data);
+  console.log(Math.round(data.temperature));
 
   const getRandom = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const newDataTemp = data.temperature;
-  const newDataHumidity = data.humidity;
-  const newDataLight = data.light;
+  const newDataTemp = Math.round(data.temperature);
+  const newDataHumidity = Math.round(data.humidity);
+  const newDataLight = Math.round(data.light);
   const newDataDust = getRandom(1, 100);
 
   let ss_id = getRandom(1, 5);
@@ -156,20 +156,20 @@ io.on("connection", function (socket) {
   socket.on("Led1", function (data) {
     if (data == "on") {
       console.log("Led1 ON");
-      client.publish("turn-led1", "Led1On");
+      client.publish("turn-led1", "on");
     } else {
       console.log("Led1 OFF");
-      client.publish("turn-led1", "Led1Off");
+      client.publish("turn-led1", "off");
     }
   });
 
   socket.on("Led2", function (data) {
     if (data == "on") {
       console.log("Led2 ON");
-      client.publish("turn-led2", "Led2On");
+      client.publish("turn-led2", "on");
     } else {
       console.log("Led2 OFF");
-      client.publish("turn-led2", "Led2Off");
+      client.publish("turn-led2", "off");
     }
   });
 });

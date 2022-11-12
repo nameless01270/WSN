@@ -19,8 +19,7 @@ connection.connect((err) => {
 
 // Create table
 const createTable = () => {
-  const query =
-    "CREATE TABLE IF NOT EXISTS `datasensors` (`id` INT(10) AUTO_INCREMENT PRIMARY KEY, `ss_id` INT(10), `temp` INT(10), `humidity` INT(10), `light` INT(10), `dust` INT(10), `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
+  const query = "CREATE TABLE IF NOT EXISTS `datasensors` (`id` INT(10) AUTO_INCREMENT PRIMARY KEY, `ss_id` INT(10), `temp` INT(10), `humidity` INT(10), `light` INT(10), `dust` INT(10), `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
   connection.query(query, (err, result) => {
     if (err) throw err;
     console.log("Created table successfully!");

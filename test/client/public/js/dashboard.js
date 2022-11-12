@@ -124,7 +124,7 @@ var animationDuration = 3000;
 function renderDataUpdated(data) {
   let temp = data.temp;
   let humidity = data.humidity;
-  let light = data.light;
+  let light = data.light/11;
   let gas = data.dust;
 
   // Change text
