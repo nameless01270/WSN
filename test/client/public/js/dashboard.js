@@ -474,15 +474,19 @@ function confirmLed() {
   if (checkBox1.checked == true && checkLed == 0) {
     socket.emit("Led1", "off");
     checkBox1.checked = false;
+    save();
   } else if (checkBox1.checked == false && checkLed == 0) {
     socket.emit("Led1", "on");
     checkBox1.checked = true;
+    save()
   } else if (checkBox2.checked == true && checkLed == 1) {
     socket.emit("Led2", "off");
     checkBox2.checked = false;
+    save()
   } else if (checkBox2.checked == false && checkLed == 1) {
     socket.emit("Led2", "on");
     checkBox2.checked = true;
+    save()
   }
 }
 
@@ -497,3 +501,27 @@ buttonLed2.addEventListener("click", function (event) {
   openPopup(checkBox2, 2);
   checkLed = 1;
 });
+
+function save() {	
+  localStorage.setItem("checkBox1", checkBox1.checked);
+  localStorage.setItem("checkBox2", checkBox2.checked);	
+}
+if (localStorage.length > 0) {
+  var checked1 = JSON.parse(localStorage.getItem("checkBox1"));
+  var checked2 = JSON.parse(localStorage.getItem("checkBox2"));
+  checkBox1.checked = checked1;
+  checkBox2.checked = checked2;  
+}
+container.addEventListener('change', save());
+
+if (checkBox1.checked == true) {
+  socket.emit("Led1", "on");
+} else if (checkBox1.checked == false) {
+  socket.emit("Led1", "off");
+}
+
+if (checkBox2.checked == true) {
+  socket.emit("Led2", "on");
+} else if (checkBox2.checked == false) {
+  socket.emit("Led2", "off");
+}

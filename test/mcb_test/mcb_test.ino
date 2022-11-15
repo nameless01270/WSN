@@ -7,8 +7,8 @@
 #define DHTPIN 4 
 #define DHTTYPE DHT11
 #define LDR 5
-#define pinOutLed1 14 // D1
-//#define pinOutLed2 4 // D2
+#define pinOutLed1 14 // D5
+#define pinOutLed2 12 // D6
 #define wifi_ssid "Kamenriderup"
 #define wifi_password "thu789opasd"
 #define mqtt_server "broker.mqttdashboard.com"
@@ -27,7 +27,7 @@ long lastMeasure = 0;
 
 void setup() {
   pinMode(pinOutLed1, OUTPUT);
-//  pinMode(pinOutLed2, OUTPUT);
+  pinMode(pinOutLed2, OUTPUT);
   Serial.begin(115200);
   dht.begin();
   setup_wifi();
@@ -57,7 +57,7 @@ void reconnect() {
     if (client.connect("clientId-X1fqWNug71", mqtt_user, mqtt_password)) {
       Serial.println("connected");
       client.subscribe("turn-led1");
-//      client.subscribe("turn-led2");
+      client.subscribe("turn-led2");
     } else {
       Serial.println("failed, try again in 5 seconds");
       delay(5000);
@@ -85,16 +85,16 @@ void callback(String topic_sub, byte *payload, unsigned int length) {
        Serial.print("Off");
     }
   }
-//  if(topic_sub == "turn-led2"){
-//    if(message == "on"){
-//      digitalWrite(pinOutLed2, HIGH);
-//      Serial.print("on");
-//    }
-//    if(message == "off"){
-//      digitalWrite(pinOutLed2, LOW);
-//      Serial.print("off");
-//    }
-//  }
+  if(topic_sub == "turn-led2"){
+    if(message == "on"){
+      digitalWrite(pinOutLed2, HIGH);
+      Serial.print("on");
+    }
+    if(message == "off"){
+      digitalWrite(pinOutLed2, LOW);
+      Serial.print("off");
+    }
+  }
 }
 
 

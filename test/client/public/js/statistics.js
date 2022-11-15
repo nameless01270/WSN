@@ -5,7 +5,7 @@ const container = document.body;
 if (localStorage.getItem("data-theme")) {
   container.setAttribute("data-theme", localStorage.getItem("data-theme"));
   console.log(localStorage.getItem("data-theme"));
-  if(localStorage.getItem("data-theme") === "dark") {
+  if (localStorage.getItem("data-theme") === "dark") {
     document.body.classList.toggle("dark-theme-variables");
     themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
     themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
@@ -51,6 +51,7 @@ function formatDate(date) {
 }
 
 // ********************* Display data ********************* //
+let checkBtnShow = 0;
 function createButton(rowElement, data) {
   const containerButton = document.createElement("div");
 
@@ -70,12 +71,13 @@ function createButton(rowElement, data) {
 
   rowElement.appendChild(containerButton);
 }
-
+let checkData;
 async function loadIntoTable(url, table) {
   const tableBody = table.querySelector("tbody");
 
   const response = await fetch(url);
   const { data } = await response.json();
+  checkData = data;
   if (data.length > 10) {
     for (let i = 0; i < 10; i++) {
       const rowElement = document.createElement("tr");
@@ -175,6 +177,7 @@ input.addEventListener("keypress", function (event) {
       `http://localhost:3000/search/${input.value}`,
       document.querySelector("table")
     );
+    checkBtnShow = 1;
   }
 });
 
@@ -194,11 +197,12 @@ function deleteRowById(id) {
 document
   .querySelector("table tbody")
   .addEventListener("click", function (event) {
-    event.preventDefault();
     if (event.target.className === "delete-button") {
+      event.preventDefault();
       deleteRowById(event.target.dataset.id);
     }
     if (event.target.className === "edit-button") {
+      event.preventDefault();
       handleEditData(event.target.dataset.id);
     }
   });
@@ -245,47 +249,48 @@ function updateData() {
 }
 
 // ********************* Button show all ********************* //
-async function loadIntoAllTable(url, table) {
+async function loadIntoAllTable(table) {
   const tableBody = table.querySelector("tbody");
-
-  const response = await fetch(url);
-  const { data } = await response.json();
-  console.log(data);
-  if (tableBody.rows.length < data.length) {
-    for (let i = 10; i < data.length; i++) {
+  
+  if (tableBody.rows.length < checkData.length) {
+    for (let i = 10; i < checkData.length; i++) {
       const rowElement = document.createElement("tr");
 
       const cellElement1 = document.createElement("td");
-      cellElement1.textContent = data[i].name;
+      cellElement1.textContent = checkData[i].name;
       rowElement.appendChild(cellElement1);
 
       const cellElement2 = document.createElement("td");
-      cellElement2.textContent = data[i].temp;
+      cellElement2.textContent = checkData[i].temp;
       rowElement.appendChild(cellElement2);
 
       const cellElement3 = document.createElement("td");
-      cellElement3.textContent = data[i].humidity;
+      cellElement3.textContent = checkData[i].humidity;
       rowElement.appendChild(cellElement3);
 
       const cellElement4 = document.createElement("td");
-      cellElement4.textContent = data[i].light;
+      cellElement4.textContent = checkData[i].light;
       rowElement.appendChild(cellElement4);
 
       const cellElement5 = document.createElement("td");
-      cellElement5.textContent = data[i].dust;
+      cellElement5.textContent = checkData[i].dust;
       rowElement.appendChild(cellElement5);
 
       const cellElement6 = document.createElement("td");
-      cellElement6.textContent = data[i].location;
+      cellElement6.textContent = checkData[i].location;
       rowElement.appendChild(cellElement6);
 
       const cellElement7 = document.createElement("td");
-      cellElement7.textContent = formatDate(data[i].created_at);
+      cellElement7.textContent = formatDate(checkData[i].created_at);
       rowElement.appendChild(cellElement7);
 
-      createButton(rowElement, data[i]);
+      createButton(rowElement, checkData[i]);
 
       tableBody.appendChild(rowElement);
+    }
+  } else if (tableBody.rows.length === checkData.length) {
+    for (let i = 10; i < checkData.length; i++) {
+      tableBody.rows[tableBody.rows.length - 1].remove();
     }
   }
 }
@@ -293,9 +298,15 @@ async function loadIntoAllTable(url, table) {
 let btnShowAll = document.querySelector(".submit");
 
 btnShowAll.addEventListener("click", function (event) {
-  event.preventDefault();
-  loadIntoAllTable(
-    "http://localhost:3000/get-all-data",
-    document.querySelector("table")
-  );
+  if (checkBtnShow === 0) {
+    event.preventDefault();
+    loadIntoAllTable(
+      document.querySelector("table")
+    );
+  } else if (checkBtnShow === 1) {
+    event.preventDefault();
+    loadIntoAllTable(
+      document.querySelector("table")
+    );
+  }
 });

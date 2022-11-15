@@ -319,6 +319,7 @@ aside .sidebar a:hover span {
     width: 6rem;
     color: var(--color-white);
     border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .delete-button {
